@@ -104,3 +104,21 @@ data.columns = ['id', 'AccessionNumber', 'Artist', 'ArtistRole', 'ArtistId', 'Ti
 data = read_csv('artwork_data.csv', names =['id', 'AccessionNumber', 'Artist', 'ArtistRole', 'ArtistId', 'Title', 'DateText', 'Medium', 'CreditLine', 'Year', 'AccqusitionYear', 'Dimensions', 'Width', 'Height', 'Depth', 'Units', 'Inscription', 'ThumbnailCopyright', 'Thumbnail', 'URL'], header=0)
 print(data.columns)
 
+#strips data of white space 
+data.loc[data.Title.str.contains('\s$', regex=True)]
+# data.title = data.Title.str.strip()
+
+#checks column for values other than NaN
+print(pd.isna(data.loc[:, 'DateText']))
+
+from numpy import nan
+#replaces date not known with NaN values
+data.replace({'DateText' : {'date not known' : nan}}, inplace=True)
+
+#another way to replace dat not known with NaN values
+data.loc[data.DateText == "date not known", ['DateText']] = nan
+
+#a way to look for bad data that is something other than years
+print(data.loc[data.Year.notnull() & data.Year.astype(str).str.contains('[^0-9]')])
+
+
