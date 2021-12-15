@@ -1,4 +1,5 @@
 import pandas as pd
+from pandas.io.parsers import read_csv
 data = pd.read_csv('artwork_sample.csv')
 #sets a variable and read artwork_sample.csv file
 
@@ -95,4 +96,11 @@ data = pd.read_csv("artwork_sample.csv")
 data.rename(columns={"thumbnailUrl" : "thumbnail"})
 #another way to rename that applies it to columns instead of rows
 data.rename({'thumbnailUrl' : 'thumbnail'}, axis=1)
+
+#One way to rename multiple columns at once is to use a list
+data.columns = ['id', 'AccessionNumber', 'Artist', 'ArtistRole', 'ArtistId', 'Title', 'DateText', 'Medium', 'CreditLine', 'Year', 'AccqusitionYear', 'Dimensions', 'Width', 'Height', 'Depth', 'Units', 'Inscription', 'ThumbnailCopyright', 'Thumbnail', 'URL']
+
+#Finally you can import the data with the column names you want from the beginning using the names parameter
+data = read_csv('artwork_data.csv', names =['id', 'AccessionNumber', 'Artist', 'ArtistRole', 'ArtistId', 'Title', 'DateText', 'Medium', 'CreditLine', 'Year', 'AccqusitionYear', 'Dimensions', 'Width', 'Height', 'Depth', 'Units', 'Inscription', 'ThumbnailCopyright', 'Thumbnail', 'URL'], header=0)
+print(data.columns)
 
